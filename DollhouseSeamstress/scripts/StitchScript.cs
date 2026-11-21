@@ -26,13 +26,22 @@ public partial class StitchScript : Node3D
     public Vector3 GetCurrentForce()
     {
         var force = new Vector3();
+        var forceMultiplier = 5;
 
         if (previousStitch != null)
         {
+            var distance = GlobalPosition.DistanceTo(previousStitch.GlobalPosition);
 
-            force += GlobalPosition + previousStitch.GlobalPosition;
+            force += (GlobalPosition - previousStitch.GlobalPosition).Normalized() * distance;
         }
 
-        return force;
+        if (nextStitch != null)
+        {
+            var distance = GlobalPosition.DistanceTo(nextStitch.GlobalPosition);
+
+            force += (GlobalPosition - nextStitch.GlobalPosition).Normalized() * distance;
+        }
+
+        return force * forceMultiplier;
     }
 }
