@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bfr1uml6buv1x"]
+
+[node name="UI" type="Control" unique_id=2129154749]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=1778915435]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.19500001
+anchor_bottom = 0.79800004
+offset_left = 265.0
+offset_top = -2.0
+offset_right = 851.2
+offset_bottom = 251.08
+theme_override_font_sizes/normal_font_size = 119
+bbcode_enabled = true
+text = "[color=magenta][wave][font=res://fonts/HangingLetters-73pE.ttf ] Dollhouse♡ Seamstress
+"
+tab_size = 15
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1001653582]
+points = PackedVector2Array(774, 0, 774, 66)
+width = 2.71
+default_color = Color(1, 0.18039216, 1, 1)
+
+[node name="Line2D" type="Line2D" parent="Line2D" unique_id=79821216]
+points = PackedVector2Array(773, 114, 773, 132)
+width = 1.67
+default_color = Color(1, 0.18039216, 1, 1)
