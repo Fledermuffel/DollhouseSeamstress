@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://kjmwff4g420g" path="res://scenes/match.tscn" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://cw03e52lmfqv" path="res://scripts/PlayerScript.cs" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://mv5w7cnfughw" path="res://scenes/geo.tscn" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://vcvvrftqbem0" path="res://scenes/juice.tscn" id="5_lquwl"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c8qys"]
 height = 1.0
@@ -36,18 +37,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.157215, 0)
 light_energy = 11.159
 omni_range = 100.0
 
-[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraContainer", "Camera")]
+[node name="CameraPivotY" type="Node3D" parent="." unique_id=1602985621]
+
+[node name="CameraPivotX" type="Node3D" parent="CameraPivotY" unique_id=691381466]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivotY/CameraPivotX" unique_id=646954517]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 15, 15)
+current = true
+fov = 45.0
+
+[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraPivotX", "CameraPivotY", "Camera")]
 script = ExtResource("3_h2yge")
 rotationSpeed = 0.02
-CameraContainer = NodePath("Camera")
-Camera = NodePath("Camera/Camera3D")
+maxAngle = 1.0
+minAngle = 0.5
+CameraPivotX = NodePath("../CameraPivotY/CameraPivotX")
+CameraPivotY = NodePath("../CameraPivotY")
+Camera = NodePath("../CameraPivotY/CameraPivotX/Camera3D")
 DragForce = 70.0
 Damping = 20.0
-
-[node name="Camera" type="Node3D" parent="Player" unique_id=1602985621]
-
-[node name="Camera3D" type="Camera3D" parent="Player/Camera" unique_id=646954517]
-transform = Transform3D(1, 0, 0, 0, 0.7675242, 0.64102, 0, -0.64102, 0.7675242, 0, 11.93048, 21.75678)
 
 [node name="UI" type="Control" parent="." unique_id=1110560998]
 layout_mode = 3
@@ -62,13 +70,25 @@ text = "1 = Move Camera
 3 = Sew Objects"
 
 [node name="PlayingCard2" parent="." unique_id=1849986354 instance=ExtResource("2_0xm2m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2965517, 3.4694006, -3.5464878)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3514757, 5.6006775, -3.5464878)
+
+[node name="PlayingCard4" parent="." unique_id=896129067 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.820223, 4.401199, -7.0929756)
+
+[node name="PlayingCard3" parent="." unique_id=1673094853 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.889656, 10.408202, -10.639463)
 
 [node name="PlayingCard" parent="." unique_id=1018829699 instance=ExtResource("2_0xm2m")]
 transform = Transform3D(-0.99979854, 0, -0.020071676, 0, 1, 0, 0.020071676, 0, -0.99979854, -3.196023, 4.6887436, -4.431059)
 
-[node name="Geo" parent="." unique_id=1662795583 instance=ExtResource("4_lquwl")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 0, 4, 13)
-
 [node name="Match" parent="." unique_id=797504762 instance=ExtResource("3_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.857274, 2.018507, 4.1570473)
+
+[node name="RigidBody3D" parent="." unique_id=1050433792 instance=ExtResource("4_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.670061, 3.604861, 6.142827)
+
+[node name="RigidBody3D2" parent="." unique_id=908168199 instance=ExtResource("4_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.670061, 3.604861, 6.142827)
+
+[node name="Juice" parent="." unique_id=1614631390 instance=ExtResource("5_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.979347, 3.472645, -1.8676186)

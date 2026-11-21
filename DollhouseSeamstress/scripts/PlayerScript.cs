@@ -55,23 +55,53 @@ public partial class PlayerScript : Node3D
 
     #region Camera
     [Export] public float rotationSpeed;
-    [Export] public Node3D CameraContainer;
+    [Export] public float maxDepth = 30f;
+    [Export] public float minDepth = 10f;
+    [Export] public float maxAngle = 0.8f;
+    [Export] public float minAngle = 0.7f;
+    [Export] public Node3D CameraPivotX;
+    [Export] public Node3D CameraPivotY;
     [Export] public Camera3D Camera;
 
     private void HandleCameraMovement()
     {
-        var rotationAngle = 0f;
+        var horizontalRotationAngle = 0f;
+        var verticalRotationAngle = 0f;
+        var depth = 0f;
+        var currentDepth = Camera.Position.Z;
+        var currentAngle = CameraPivotX.Rotation.X;
 
-        if (Input.IsActionPressed("move_right"))
+        if (Input.IsActionPressed("rotate_right"))
         {
-            rotationAngle = 1.0f;
+            horizontalRotationAngle = 1.0f;
         }
-        if (Input.IsActionPressed("move_left"))
+        if (Input.IsActionPressed("rotate_left"))
         {
-            rotationAngle = -1.0f;
+            horizontalRotationAngle = -1.0f;
+        }
+        if (Input.IsActionPressed("rotate_down") && currentAngle <= 0.5f)
+        {
+            verticalRotationAngle = 1.0f;
+            GD.Print(currentAngle);
+
+        }
+        if (Input.IsActionPressed("rotate_up") && currentAngle >= -0.5f)
+        {
+            verticalRotationAngle = -1.0f;
+            GD.Print(currentAngle);
+        }
+        if (Input.IsActionJustReleased("move_in") && currentDepth >= minDepth)
+        {
+            depth = -1f;
+        }
+        if (Input.IsActionJustReleased("move_out") && currentDepth <= maxDepth)
+        {
+            depth = 1f;
         }
 
-        CameraContainer.RotateY(rotationAngle * rotationSpeed);
+        Camera.Translate(new Vector3(0, 0, depth));
+        CameraPivotY.RotateObjectLocal(Vector3.Up, horizontalRotationAngle * rotationSpeed);
+        CameraPivotX.RotateObjectLocal(Vector3.Right, verticalRotationAngle * rotationSpeed);
     }
 
     private void GetCameraVectors(out Vector3 origin, out Vector3 direction)
@@ -125,7 +155,7 @@ public partial class PlayerScript : Node3D
         if (collider is RigidBody3D body && body.IsInGroup("draggable"))
         {
             _draggedBody = body;
-            _draggedBody.Sleeping = false;
+            _draggedBody.Freeze = false;
             _draggedBody.LockRotation = true;
             _dragDistance = origin.DistanceTo(_draggedBody.Position);
         }
@@ -133,8 +163,7 @@ public partial class PlayerScript : Node3D
 
     private void DropObject()
     {
-        _draggedBody.Sleeping = true;
-        _draggedBody.LockRotation = false;
+        _draggedBody.Freeze = true;
         _draggedBody = null;
     }
 
@@ -150,7 +179,7 @@ public partial class PlayerScript : Node3D
         {
             _dragDistance += 1f;
         }
-        //TODO: Handle scroll
+
 
         var mouseTarget = origin + direction * _dragDistance;
 
@@ -200,7 +229,7 @@ public partial class PlayerScript : Node3D
             newRotation.Z = -1;
         }
         newRotation *= objectRotationSpeed;
-        newRotation = newRotation.Rotated(Vector3.Up, CameraContainer.Rotation.Y);
+        newRotation = newRotation.Rotated(Vector3.Up, CameraPivotY.Rotation.Y);
 
         _draggedBody.RotateX(newRotation.X);
         _draggedBody.RotateY(newRotation.Y);
@@ -264,10 +293,14 @@ public partial class PlayerScript : Node3D
         {
             var parent = stitch.GetParent<RigidBody3D>();
 
-            Vector3 force = (Vector3)stitch.Call("GetDirectionToPrevious");
+            Vector3 force = (Vector3)stitch.Call("GetCurrentForce");
 
+            force = force.LimitLength(MaxForce);
 
-            parent.ApplyForce(force, stitch.Position);
+            parent.LockRotation = false;
+            parent.Sleeping = false;
+            parent.Freeze = false;
+            parent.ApplyForce(-force, stitch.Position);
         }
     }
 
