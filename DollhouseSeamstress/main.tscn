@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://nk0ij0gu1hi6"]
+
+[ext_resource type="PackedScene" uid="uid://ra47xtfw04di" path="res://scenes/card.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://kjmwff4g420g" path="res://scenes/match.tscn" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://cw03e52lmfqv" path="res://scripts/PlayerScript.cs" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://mv5w7cnfughw" path="res://scenes/geo.tscn" id="4_lquwl"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c8qys"]
+height = 1.0
+radius = 25.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+vertex_color_is_srgb = true
+albedo_color = Color(0.7812086, 0.18628517, 0.41657177, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c8qys"]
+lightmap_size_hint = Vector2i(16, 56)
+material = SubResource("StandardMaterial3D_ig7tw")
+add_uv2 = true
+uv2_padding = 0.72
+height = 10.0
+
+[node name="Node3D" type="Node3D" unique_id=1102266892]
+
+[node name="Table" type="StaticBody3D" parent="." unique_id=1125217831]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table" unique_id=1807398437]
+shape = SubResource("CylinderShape3D_c8qys")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table/CollisionShape3D" unique_id=1844555869]
+transform = Transform3D(50, 0, 0, 0, 0.1, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("CylinderMesh_c8qys")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=82024391]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.157215, 0)
+light_energy = 11.159
+omni_range = 100.0
+
+[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraContainer", "Camera")]
+script = ExtResource("3_h2yge")
+rotationSpeed = 0.02
+CameraContainer = NodePath("Camera")
+Camera = NodePath("Camera/Camera3D")
+DragForce = 70.0
+Damping = 20.0
+
+[node name="Camera" type="Node3D" parent="Player" unique_id=1602985621]
+
+[node name="Camera3D" type="Camera3D" parent="Player/Camera" unique_id=646954517]
+transform = Transform3D(1, 0, 0, 0, 0.7675242, 0.64102, 0, -0.64102, 0.7675242, 0, 11.93048, 21.75678)
+
+[node name="UI" type="Control" parent="." unique_id=1110560998]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="UI" unique_id=201104224]
+layout_mode = 0
+text = "1 = Move Camera
+2 = Drag and Drop Objects
+3 = Sew Objects"
+
+[node name="PlayingCard2" parent="." unique_id=1849986354 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2965517, 3.4694006, -3.5464878)
+
+[node name="PlayingCard" parent="." unique_id=1018829699 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(-0.99979854, 0, -0.020071676, 0, 1, 0, 0.020071676, 0, -0.99979854, -3.196023, 4.6887436, -4.431059)
+
+[node name="Geo" parent="." unique_id=1662795583 instance=ExtResource("4_lquwl")]
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 0, 4, 13)
+
+[node name="Match" parent="." unique_id=797504762 instance=ExtResource("3_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.857274, 2.018507, 4.1570473)

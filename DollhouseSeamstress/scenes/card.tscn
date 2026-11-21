@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ra47xtfw04di"]
+
+[ext_resource type="ArrayMesh" uid="uid://cdg8xij8ybmxq" path="res://objects/card.obj" id="1_6u4wf"]
+[ext_resource type="Texture2D" uid="uid://nhimaebftrcj" path="res://resources/card-material.png" id="2_6u4wf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktuci"]
+albedo_texture = ExtResource("2_6u4wf")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sy11y"]
+size = Vector3(4.2463226, 6.138603, 0.15826416)
+
+[node name="PlayingCard" type="RigidBody3D" unique_id=896129067 groups=["draggable"]]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=669942631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.88757, 0)
+mesh = ExtResource("1_6u4wf")
+surface_material_override/0 = SubResource("StandardMaterial3D_ktuci")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=58030554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13129902, 0)
+shape = SubResource("BoxShape3D_sy11y")
