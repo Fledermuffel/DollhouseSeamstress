@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://bfr1uml6buv1x"]
 
+[ext_resource type="FontFile" uid="uid://bjbw03a48nvny" path="res://fonts/Vailery-BLL7l.ttf" id="1_fyqef"]
+
+[sub_resource type="Theme" id="Theme_m6e0p"]
+
 [node name="UI" type="Control" unique_id=2129154749]
 layout_mode = 3
 anchors_preset = 0
@@ -30,3 +34,34 @@ default_color = Color(1, 0.18039216, 1, 1)
 points = PackedVector2Array(773, 114, 773, 132)
 width = 1.67
 default_color = Color(1, 0.18039216, 1, 1)
+
+[node name="Button" type="Button" parent="." unique_id=1466140100]
+self_modulate = Color(0.9577659, 0.9115812, 0.9783451, 1)
+layout_mode = 0
+offset_left = 456.0
+offset_top = 450.0
+offset_right = 664.0
+offset_bottom = 527.0
+theme_override_colors/font_color = Color(0.55690473, 0.73217547, 0.9760354, 1)
+theme_override_colors/font_focus_color = Color(0.2954233, 0.7974641, 0.915865, 1)
+theme_override_colors/font_hover_color = Color(0.31074902, 0.8476712, 0.8468652, 1)
+theme_override_colors/font_outline_color = Color(0.96053296, 0.9309929, 0.9898476, 1)
+text = "ughhh..uUgh...okay. 
+does that make up for me
+ sleeping with your dad?"
+
+[node name="Label" type="Label" parent="." unique_id=1131616998]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 280.0
+offset_right = 857.0
+offset_bottom = 430.0
+theme = SubResource("Theme_m6e0p")
+theme_override_colors/font_color = Color(1, 0.28627452, 1, 1)
+theme_override_fonts/font = ExtResource("1_fyqef")
+theme_override_font_sizes/font_size = 29
+text = "Please!
+can u helop me build a doolhouse? 
+Mommy left me this needle and thread! 
+Maybe we can sew theese Objects together!"
+horizontal_alignment = 1

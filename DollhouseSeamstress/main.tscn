@@ -1,10 +1,7 @@
 [gd_scene format=3 uid="uid://nk0ij0gu1hi6"]
 
 [ext_resource type="PackedScene" uid="uid://ra47xtfw04di" path="res://scenes/card.tscn" id="2_0xm2m"]
-[ext_resource type="FontFile" uid="uid://bjbw03a48nvny" path="res://fonts/Vailery-BLL7l.ttf" id="2_7mycd"]
-[ext_resource type="PackedScene" uid="uid://kjmwff4g420g" path="res://scenes/match.tscn" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://cw03e52lmfqv" path="res://scripts/PlayerScript.cs" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://mv5w7cnfughw" path="res://scenes/geo.tscn" id="4_lquwl"]
 [ext_resource type="FontFile" uid="uid://dcpnkjbi3mioq" path="res://fonts/HangingLetters-73pE.ttf" id="6_272bh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c8qys"]
@@ -21,8 +18,6 @@ material = SubResource("StandardMaterial3D_ig7tw")
 add_uv2 = true
 uv2_padding = 0.72
 height = 10.0
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b6raw"]
 
 [sub_resource type="Environment" id="Environment_b6raw"]
 background_mode = 1
@@ -49,8 +44,6 @@ fog_sky_affect = 0.911
 fog_height = -126.25
 fog_height_density = 4.8219
 
-[sub_resource type="Theme" id="Theme_b6raw"]
-
 [node name="Node3D" type="Node3D" unique_id=1102266892]
 
 [node name="Table" type="StaticBody3D" parent="." unique_id=1125217831]
@@ -67,18 +60,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.157215, 0)
 light_energy = 11.159
 omni_range = 100.0
 
-[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraContainer", "Camera")]
+[node name="CameraPivotY" type="Node3D" parent="." unique_id=1602985621]
+
+[node name="CameraPivotX" type="Node3D" parent="CameraPivotY" unique_id=691381466]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivotY/CameraPivotX" unique_id=646954517]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 15, 15)
+current = true
+fov = 45.0
+
+[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraPivotX", "CameraPivotY", "Camera")]
 script = ExtResource("3_h2yge")
 rotationSpeed = 0.02
-CameraContainer = NodePath("Camera")
-Camera = NodePath("Camera/Camera3D")
+maxAngle = 1.0
+minAngle = 0.5
+CameraPivotX = NodePath("../CameraPivotY/CameraPivotX")
+CameraPivotY = NodePath("../CameraPivotY")
+Camera = NodePath("../CameraPivotY/CameraPivotX/Camera3D")
 DragForce = 70.0
 Damping = 20.0
-
-[node name="Camera" type="Node3D" parent="Player" unique_id=1602985621]
-
-[node name="Camera3D" type="Camera3D" parent="Player/Camera" unique_id=646954517]
-transform = Transform3D(1, 0, 0, 0, 0.7675242, 0.64102, 0, -0.64102, 0.7675242, 0, 11.93048, 21.75678)
 
 [node name="UI" type="Control" parent="." unique_id=1110560998]
 layout_mode = 3
@@ -101,84 +101,30 @@ Drag and Drop Objects: press 2
 ______________________
 Sew Objects: press 3"
 
-[node name="PlayingCard2" parent="." unique_id=1849986354 instance=ExtResource("2_0xm2m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2965517, 3.4694006, -3.5464878)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=800365276]
+environment = SubResource("Environment_b6raw")
 
-[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="PlayingCard2" unique_id=764672560]
-transform = Transform3D(-0.88027656, -0.46488985, -0.09481953, 0.15584284, -0.4720641, 0.86767995, -0.4481365, 0.74902135, 0.48799667, -20.304005, 0.2977903, 7.269464)
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=764672560]
+transform = Transform3D(-0.88027656, -0.46488985, -0.094819546, 0.15584284, -0.4720641, 0.86767995, -0.4481365, 0.74902135, 0.48799667, -17.95253, 5.898468, 3.7229762)
 light_color = Color(0.310681, 0.54975355, 0.8954062, 1)
 light_energy = 3.315
 light_indirect_energy = 1.947
 light_volumetric_fog_energy = 1.526
 shadow_enabled = true
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="PlayingCard2" unique_id=1075815855]
-transform = Transform3D(-0.51607776, 0.5557173, 0.6517991, 0.74976784, -0.07484044, 0.657455, 0.41414008, 0.8279959, -0.37803546, -5.6324096, 3.17893, 4.1686006)
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1075815855]
+transform = Transform3D(-0.51607776, 0.5557173, 0.6517991, 0.74976784, -0.07484046, 0.657455, 0.41414008, 0.8279959, -0.37803546, -3.2809339, 8.779608, 0.62211275)
 light_color = Color(0.89948106, 0.7845942, 0.9940241, 1)
 light_energy = 1.526
 light_volumetric_fog_energy = 1.526
 shadow_enabled = true
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlayingCard2" unique_id=2102551608]
-transform = Transform3D(0.16872603, 0.9085572, -0.3821719, -0.19275217, 0.4106589, 0.8911823, 0.96663237, -0.07670119, 0.24441522, -7.1108074, 12.333847, 4.268625)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=2102551608]
+transform = Transform3D(0.16872603, 0.9085572, -0.3821719, -0.19275217, 0.4106589, 0.8911823, 0.96663237, -0.07670119, 0.24441522, -4.7593317, 17.934525, 0.722137)
 light_color = Color(0.45493317, 0.05663617, 0.65026516, 1)
 light_energy = 2.684
 light_volumetric_fog_energy = 1.526
 shadow_enabled = true
 
-[node name="PlayingCard" parent="." unique_id=1018829699 instance=ExtResource("2_0xm2m")]
-transform = Transform3D(-0.99979854, 0, -0.020071676, 0, 1, 0, 0.020071676, 0, -0.99979854, -3.196023, 4.6887436, -4.431059)
-
-[node name="Geo" parent="." unique_id=1662795583 instance=ExtResource("4_lquwl")]
-transform = Transform3D(0.74765635, -0.39004973, 0.5374675, 0.17124648, 0.89520156, 0.41144755, -0.6416266, -0.2155819, 0.7360977, -1.3735867, 4.9943786, 11.888296)
-mass = 1.539
-physics_material_override = SubResource("PhysicsMaterial_b6raw")
-
-[node name="Match" parent="." unique_id=797504762 instance=ExtResource("3_1bvp3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.857274, 2.018507, 4.1570473)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=800365276]
-environment = SubResource("Environment_b6raw")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=169441211]
-anchors_preset = -1
-anchor_right = 0.19500001
-anchor_bottom = 0.79800004
-offset_left = 126.0
-offset_top = 2.0
-offset_right = 859.36
-offset_bottom = -223.216
-theme_override_font_sizes/normal_font_size = 108
-bbcode_enabled = true
-text = "[color=magenta][wave][font=res://fonts/HangingLetters-73pE.ttf ] [font_size =70px ]Dollhouse Seamstress
-"
-tab_size = 15
-
-[node name="Button" type="Button" parent="." unique_id=1279026428]
-self_modulate = Color(0.9577659, 0.9115812, 0.9783451, 1)
-offset_left = 456.0
-offset_top = 450.0
-offset_right = 664.0
-offset_bottom = 527.0
-theme_override_colors/font_color = Color(0.55690473, 0.73217547, 0.9760354, 1)
-theme_override_colors/font_focus_color = Color(0.2954233, 0.7974641, 0.915865, 1)
-theme_override_colors/font_hover_color = Color(0.31074902, 0.8476712, 0.8468652, 1)
-theme_override_colors/font_outline_color = Color(0.96053296, 0.9309929, 0.9898476, 1)
-text = "ughhh..uUgh...okay. 
-does that make up for me
- sleeping with your dad?"
-
-[node name="Label" type="Label" parent="." unique_id=1652460410]
-offset_left = 266.0
-offset_top = 280.0
-offset_right = 857.0
-offset_bottom = 430.0
-theme = SubResource("Theme_b6raw")
-theme_override_colors/font_color = Color(1, 0.28627452, 1, 1)
-theme_override_fonts/font = ExtResource("2_7mycd")
-theme_override_font_sizes/font_size = 29
-text = "Please!
-can u helop me build a doolhouse? 
-Mommy left me this needle and thread! 
-Maybe we can sew theese Objects together!"
-horizontal_alignment = 1
+[node name="PlayingCard" parent="." unique_id=896129067 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64404964, 3.489857, 0.252594)
