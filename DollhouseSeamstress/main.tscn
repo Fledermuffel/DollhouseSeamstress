@@ -2,19 +2,21 @@
 
 [ext_resource type="PackedScene" uid="uid://ra47xtfw04di" path="res://scenes/card.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cw03e52lmfqv" path="res://scripts/PlayerScript.cs" id="3_h2yge"]
+[ext_resource type="AudioStream" uid="uid://cwskr1xtsmy6f" path="res://sound/sewingsound.wav" id="4_lquwl"]
+[ext_resource type="AudioStream" uid="uid://bvk1gttg3ovp6" path="res://sound/freesound_community-slow-ethereal-sequencer-music-fragment-50247.mp3" id="5_7mycd"]
 [ext_resource type="FontFile" uid="uid://dcpnkjbi3mioq" path="res://fonts/HangingLetters-73pE.ttf" id="6_272bh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c8qys"]
 height = 1.0
 radius = 25.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
 vertex_color_is_srgb = true
 albedo_color = Color(0.7812086, 0.18628517, 0.41657177, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_c8qys"]
 lightmap_size_hint = Vector2i(16, 56)
-material = SubResource("StandardMaterial3D_ig7tw")
+material = SubResource("StandardMaterial3D_272bh")
 add_uv2 = true
 uv2_padding = 0.72
 height = 10.0
@@ -69,13 +71,9 @@ transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.70710
 current = true
 fov = 45.0
 
-[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("CameraPivotX", "CameraPivotY", "Camera")]
+[node name="Player" type="Node3D" parent="." unique_id=619369639 node_paths=PackedStringArray("Camera")]
 script = ExtResource("3_h2yge")
 rotationSpeed = 0.02
-maxAngle = 1.0
-minAngle = 0.5
-CameraPivotX = NodePath("../CameraPivotY/CameraPivotX")
-CameraPivotY = NodePath("../CameraPivotY")
 Camera = NodePath("../CameraPivotY/CameraPivotX/Camera3D")
 DragForce = 70.0
 Damping = 20.0
@@ -128,3 +126,10 @@ shadow_enabled = true
 
 [node name="PlayingCard" parent="." unique_id=896129067 instance=ExtResource("2_0xm2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64404964, 3.489857, 0.252594)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=955556172]
+stream = ExtResource("4_lquwl")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=649453586]
+stream = ExtResource("5_7mycd")
+autoplay = true
